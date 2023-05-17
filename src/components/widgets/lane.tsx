@@ -5,6 +5,7 @@ import {
   ShoppingCart,
   ShoppingCartReport,
   SlotReport,
+  randomIngredient,
 } from "../../api/concept";
 
 export interface ILane {
@@ -12,13 +13,14 @@ export interface ILane {
   cart: ShoppingCartReport;
 }
 
+const x = randomIngredient;
+console.log(new randomIngredient());
+
 export const LaneWidget: React.FC<ILane> = (ps) => {
-  const dataReport = ps.api.printReport(ps.cart).slots;
-  const setIngredient = ps.api.setRandomIngredient();
   const direction = ps.direction;
 
   const [ingredientIsVisibile, setVisible] = useState<boolean[]>(
-    new Array(dataReport.length).fill(true)
+    new Array(8).fill(true)
   );
 
   useEffect(() => {
@@ -65,7 +67,6 @@ export const LaneWidget: React.FC<ILane> = (ps) => {
         directionId={direction}
         tapped={destroy}
         dropped={drop}
-        ingredient={setIngredient}
       />
     );
   }

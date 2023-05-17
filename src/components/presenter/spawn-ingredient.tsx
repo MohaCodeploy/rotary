@@ -7,7 +7,6 @@ interface spawnIngredient {
   directionId: Direction;
   tapped: (x: number) => void;
   dropped: (ingredient: string) => void;
-  ingredient: string;
 }
 
 export const SpawnIngredient: React.FC<spawnIngredient> = (ps) => {
@@ -19,7 +18,7 @@ export const SpawnIngredient: React.FC<spawnIngredient> = (ps) => {
       transition={{ duration: 8 }}
       onAnimationComplete={() => {
         console.log("Animazione completata");
-        ps.dropped(ps.ingredient);
+        ps.dropped("basilico");
         setIsCompletd(true);
       }}
       onClick={() => {
@@ -28,7 +27,7 @@ export const SpawnIngredient: React.FC<spawnIngredient> = (ps) => {
       className="h-[128px] w-[110px] flex justify-center items-center"
     >
       <img
-        src={process.env.PUBLIC_URL + `/icons/${ps.ingredient}.png`}
+        src={process.env.PUBLIC_URL + `/icons/basilico.png`}
         className="z-50"
       />
     </motion.div>

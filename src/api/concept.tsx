@@ -14,13 +14,13 @@ export interface Player {
 
 //laneReport
 export class LaneReport implements GameReport {
-  lanes: randomIngredient[];
+  lanes: Ingredients[];
 
   constructor() {
     this.lanes = [];
   }
 }
-export class randomIngredient {
+export class Ingredients {
   private ingredients: string[];
   constructor() {
     this.ingredients = [
@@ -46,9 +46,16 @@ export class randomIngredient {
     const randomIndex = Math.floor(Math.random() * this.ingredients.length);
     return this.ingredients[randomIndex];
   };
-  randomIngredient: () => string = this.setRandomIngredient;
 }
 
+export class randomIngredient {
+  randomIngredient: string;
+
+  constructor() {
+    const ingredients = new Ingredients();
+    this.randomIngredient = ingredients.setRandomIngredient();
+  }
+}
 //ShoppingCart
 export class ShoppingCart implements GameReport {
   private slots: [
