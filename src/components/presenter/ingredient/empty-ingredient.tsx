@@ -1,9 +1,13 @@
-export const EmptyIngredient: React.FC<{ ingredient: string }> = (ps) => {
+import { Ingredient } from "../../../api/concept";
+
+export const EmptyIngredient: React.FC<{ ingredientId: Ingredient | null }> = (
+  ps
+) => {
   return (
     <div className="h-full w-full relative flex justify-center items-center">
       <img src={process.env.PUBLIC_URL + `/sprite/Empty-bg.png`} />
       <img
-        src={process.env.PUBLIC_URL + `/empty-icons/${ps.ingredient}.png`}
+        src={process.env.PUBLIC_URL + `/empty-icons/${ps.ingredientId}.png`}
         className="absolute z-50"
       />
     </div>

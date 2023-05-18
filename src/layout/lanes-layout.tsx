@@ -1,20 +1,20 @@
-import { Direction } from "../App";
+import { Direction } from "../api/concept";
 
 type Elm = React.ReactElement;
 
 export const LanesLayout: React.FC<{
-  laneDirections: Record<Direction, Elm>;
+  lanes: Elm[];
 }> = (ps) => {
   return (
     <div className="grid grid-cols-4 items-center justify-items-center">
-      <div>{ps.laneDirections["0"]}</div>
-      <div>{ps.laneDirections["1"]}</div>
-      <div>{ps.laneDirections["2"]}</div>
-      <div>{ps.laneDirections["3"]}</div>
-      <div>{ps.laneDirections["4"]}</div>
-      <div>{ps.laneDirections["5"]}</div>
-      <div>{ps.laneDirections["6"]}</div>
-      <div>{ps.laneDirections["7"]}</div>
+      <div>{ps.lanes["0"]}</div>
+      <div>{ps.lanes["1"]}</div>
+      <div>{ps.lanes["2"]}</div>
+      <div>{ps.lanes["3"]}</div>
+      <div>{ps.lanes["4"]}</div>
+      <div>{ps.lanes["5"]}</div>
+      <div>{ps.lanes["6"]}</div>
+      <div>{ps.lanes["7"]}</div>
     </div>
   );
 };

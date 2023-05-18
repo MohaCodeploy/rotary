@@ -7,10 +7,10 @@ export const IngredientSlot: React.FC<SlotReport> = (ps) => {
   switch (ps.status) {
     case SlotStatus.Empty:
     default:
-      return <EmptyIngredient ingredient={ps.expectedIngredient} />;
+      return <EmptyIngredient ingredientId={ps.expectedIngredient} />;
     case SlotStatus.Correct:
-      return <CorrectIngredient ingredient={ps.assegnedIngredient} />;
+      return <CorrectIngredient />;
     case SlotStatus.Wrong:
-      return <WrongIngredient ingredient={ps.assegnedIngredient} />;
+      return <WrongIngredient />;
   }
 };

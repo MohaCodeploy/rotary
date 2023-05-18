@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+    @font-face {
+        font-family: 'Rotary';
+        src: url('./fonts/Inconstant-Base100.otf') format('opentype');
+      }
+  }

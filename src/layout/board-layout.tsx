@@ -1,5 +1,3 @@
-import { Direction } from "../App";
-
 type Elm = React.ReactElement;
 
 export const BoardLayout: React.FC<{

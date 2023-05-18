@@ -20,7 +20,6 @@ useEffect(() => {
 
 const updatePosition = (index:number, x:number, y:number) => {
   setPositions((prevPositions) => {
-    console.log(positions)
     const newPositions = [...prevPositions];
     newPositions[index] = { x, y };
     return newPositions;

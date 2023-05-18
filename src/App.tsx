@@ -1,93 +1,55 @@
 import { BoardLayout } from "./layout/board-layout";
-import { PlayerWidget } from "./components/widgets/player";
-import { LaneWidget } from "./components/widgets/lane";
-import { IngredientList } from "./components/presenter/ingredients-list";
-import { BucketBottom } from "./components/widgets/bucket-bottom";
 import { LanesLayout } from "./layout/lanes-layout";
+import { Player } from "./components/presenter/player";
+import {
+  Direction,
+  Ingredient,
+  ShoppingCartGame,
+  ShoppingCartReport,
+} from "./api/concept";
+import { IngredientList } from "./components/presenter/ingredients-list";
 import { useState } from "react";
-import { ShoppingCart, ShoppingCartReport } from "./api/concept";
-export enum Direction {
-  WestTop,
-  NordRight,
-  NordLeft,
-  EastTop,
-  WestBottom,
-  SouthRight,
-  SouthLeft,
-  EastBottom,
-}
+import { Bucket } from "./components/widgets/bucket";
+import { Lane } from "./components/presenter/lane";
 
-export interface Api {
-  readTimeLeft(id: string): number;
-}
+const laneDirections = [
+  Direction.WestTop,
+  Direction.NordRight,
+  Direction.NordLeft,
+  Direction.EastTop,
+  Direction.WestBottom,
+  Direction.SouthRight,
+  Direction.SouthLeft,
+  Direction.EastBottom,
+];
 
-class API implements Api {
-  readTimeLeft(id: string): number {
-    return 0;
-  }
-}
+const game = new ShoppingCartGame();
 
-export const App: React.FC = (ps) => {
-  const newGame = new ShoppingCart();
+export const App: React.FC = () => {
+  const [cart, setCart] = useState(game.setNewCart());
 
-  const cart = newGame.setNewGame(new ShoppingCartReport());
+  const updateCart = (ingredient: Ingredient, slotId: number) => {
+    game.placeIngredient(ingredient, slotId);
+    setCart(game.printGameReport());
+  };
 
   return (
     <BoardLayout
       players={[
-        <PlayerWidget />,
-        <PlayerWidget />,
-        <PlayerWidget />,
-        <PlayerWidget />,
+        <Player name={"P1"} />,
+        <Player name={"P2"} />,
+        <Player name={"P3"} />,
+        <Player name={"P4"} />,
       ]}
       lanes={
         <LanesLayout
-          laneDirections={{
-            [Direction.WestTop]: (
-              <LaneWidget
-                {...{ direction: Direction.WestTop, newGame, cart }}
-              />
-            ),
-            [Direction.NordRight]: (
-              <LaneWidget
-                {...{ direction: Direction.NordRight, newGame, cart }}
-              />
-            ),
-            [Direction.NordLeft]: (
-              <LaneWidget
-                {...{ direction: Direction.NordLeft, newGame, cart }}
-              />
-            ),
-            [Direction.SouthRight]: (
-              <LaneWidget
-                {...{ direction: Direction.SouthRight, newGame, cart }}
-              />
-            ),
-            [Direction.SouthLeft]: (
-              <LaneWidget
-                {...{ direction: Direction.SouthLeft, newGame, cart }}
-              />
-            ),
-            [Direction.EastTop]: (
-              <LaneWidget
-                {...{ direction: Direction.EastTop, newGame, cart }}
-              />
-            ),
-            [Direction.EastBottom]: (
-              <LaneWidget
-                {...{ direction: Direction.EastBottom, newGame, cart }}
-              />
-            ),
-            [Direction.WestBottom]: (
-              <LaneWidget
-                {...{ direction: Direction.WestBottom, newGame, cart }}
-              />
-            ),
-          }}
+          lanes={laneDirections.map((direction) => (
+            <Lane directionId={direction} updateCart={updateCart} />
+          ))}
         />
       }
-      bucketContainer={<BucketBottom data={cart} />}
-      ingredientsList={<IngredientList />}
+      bucketContainer={<Bucket slots={cart.slots} />}
+      ingredientsList={<IngredientList slots={cart.slots} />}
     />
   );
 };

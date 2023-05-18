@@ -1,10 +1,15 @@
-export const IngredientList:React.FC =()=>{ return (
+import { ShoppingCartReport } from "../../api/concept";
+
+export const IngredientList: React.FC<ShoppingCartReport> = (ps) => {
+  return (
     <div className="absolute bottom-0 right-60">
-      <ul >
-         <li>Pane</li>
-         <li>Pomodoro</li>
-         <li>Patate</li>
-         <li>Latte</li>
+      <ul>
+        {ps.slots.map((ingr, index) => (
+          <li key={index} className="font-[Rotary]">
+            {ingr.expectedIngredient}
+          </li>
+        ))}
       </ul>
     </div>
-)}
+  );
+};
