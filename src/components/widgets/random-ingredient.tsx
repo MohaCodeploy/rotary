@@ -14,19 +14,19 @@ export const RandomIngredient: React.FC<IRandomIngredient> = (ps) => {
   switch (direction) {
     case 1:
     case 2:
-      initialValue = { x: 0, y: -400 };
+      initialValue = { x: 0, y: -500 };
       break;
     case 5:
     case 6:
-      initialValue = { x: 0, y: 400 };
+      initialValue = { x: 0, y: 500 };
       break;
     case 3:
     case 7:
-      initialValue = { x: 400, y: 0 };
+      initialValue = { x: 550, y: 0 };
       break;
     case 4:
     case 0:
-      initialValue = { x: -400, y: 0 };
+      initialValue = { x: -550, y: 0 };
       break;
     default:
       return null;

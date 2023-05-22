@@ -11,6 +11,7 @@ import { IngredientList } from "./components/presenter/ingredients-list";
 import { useState, useEffect, useRef } from "react";
 import { Bucket } from "./components/widgets/bucket";
 import { Lane } from "./components/presenter/lane";
+import { GameInfoBox } from "./components/widgets/game-info";
 
 const direction = [
   Direction.WestTop,
@@ -47,11 +48,17 @@ export const App: React.FC<{ game: ShoppingCartGame }> = (ps) => {
     <>
       {gameRef.current != undefined && (
         <BoardLayout
-          players={[
-            <Player name={"P1"} />,
-            <Player name={"P2"} />,
-            <Player name={"P3"} />,
-            <Player name={"P4"} />,
+          gameInfo={[
+            <GameInfoBox data={gameRef.current.printGameInfo(0)} degree={90} />,
+            <GameInfoBox data={gameRef.current.printGameInfo(1)} degree={0} />,
+            <GameInfoBox
+              data={gameRef.current.printGameInfo(2)}
+              degree={180}
+            />,
+            <GameInfoBox
+              data={gameRef.current.printGameInfo(3)}
+              degree={270}
+            />,
           ]}
           lanes={
             <LanesLayout

@@ -1,5 +1,3 @@
-import { update } from "react-spring";
-
 export interface GameReport {
   players: [PlayerReport, PlayerReport, PlayerReport, PlayerReport];
   lanes: [
@@ -17,6 +15,11 @@ export interface GameReport {
   timeLeft: TimeReport;
 }
 
+export interface GameInfo {
+  playerName: string;
+  round: number;
+  time: number;
+}
 export interface PlayerReport {
   name: string;
 }
@@ -83,8 +86,15 @@ export class ShoppingCartGame {
   private allIngredients: Ingredient[];
   private correctIngredients: Ingredient[];
   private lanes: LaneReport[];
+  private gameInfo: GameInfo[];
 
   constructor() {
+    this.gameInfo = [
+      { playerName: "Player1", round: 1, time: 10000 },
+      { playerName: "Player2", round: 1, time: 10000 },
+      { playerName: "Player3", round: 1, time: 10000 },
+      { playerName: "Player4", round: 1, time: 10000 },
+    ];
     this.allIngredients = [
       Ingredient.Basilico,
       Ingredient.Carota,
@@ -213,6 +223,9 @@ export class ShoppingCartGame {
   }
   printLane = (dir: Direction) => {
     return this.lanes[dir].ingredients.slice();
+  };
+  printGameInfo = (index: number) => {
+    return this.gameInfo[index];
   };
 
   printGameReport = () => {

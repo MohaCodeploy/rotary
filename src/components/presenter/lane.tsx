@@ -21,6 +21,11 @@ export const Lane: React.FC<ILane> = (ps) => {
   };
 
   useEffect(() => {
+    const randomNumber = () => {
+      const x = Math.floor(Math.random() * 4001) + 2000;
+      return x;
+    };
+    //random number between 2000 and 6000
     const interval = setInterval(() => {
       updateLane();
     }, 6000);
@@ -29,7 +34,7 @@ export const Lane: React.FC<ILane> = (ps) => {
   }, []);
 
   return (
-    <div className="h-[128px] w-[110px] flex justify-center items-center relative">
+    <div className="h-[135px] w-[120px] flex justify-center items-center relative">
       {lane?.map((ingr, i) => (
         <div className="absolute" key={i}>
           <RandomIngredient
