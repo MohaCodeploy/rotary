@@ -1,49 +1,43 @@
-import { useState, useEffect } from "react";
-import {
-  Direction,
-  ShoppingCartReport,
-  Ingredient,
-  Ingredients,
-} from "../../api/concept";
+import { useEffect, useState, useRef } from "react";
+import { Direction, Ingredient, ShoppingCartGame } from "../../api/concept";
 import { RandomIngredient } from "../widgets/random-ingredient";
 
 interface ILane {
+  game: ShoppingCartGame;
   directionId: Direction;
-  updateCart: (ingredient: Ingredient, slotId: number) => void;
+  updateCart: (ingredientId: Ingredient, slotId: number) => void;
 }
 
 export const Lane: React.FC<ILane> = (ps) => {
-  const newRandomIngredient = new Ingredients().getRandomIngredient();
-  const [spawnedIngredients, setSpawnedIngredients] = useState<
-    React.ReactElement[]
-  >([]);
+  const { directionId, updateCart, game } = ps;
+  const [lane, setLane] = useState<Ingredient[]>(game.printLane(directionId));
 
-  const throwIngredient = () => {
-    setSpawnedIngredients((prevIngredients) => [
-      ...prevIngredients,
-      <RandomIngredient
-        directionId={ps.directionId}
-        updateCart={ps.updateCart}
-        ingredient={newRandomIngredient}
-      />,
-    ]);
+  const updateLane = () => {
+    if (!game.isCompleted()) {
+      game.throwIngredient(directionId, game.getRandomIngredient());
+      const updatedLanes = game.printLane(directionId);
+      setLane([...updatedLanes]);
+    }
   };
 
   useEffect(() => {
     const interval = setInterval(() => {
-      throwIngredient();
-    }, 10000);
+      updateLane();
+    }, 6000);
 
-    return () => {
-      clearInterval(interval);
-    };
+    return () => clearInterval(interval);
   }, []);
 
   return (
     <div className="h-[128px] w-[110px] flex justify-center items-center relative">
-      {spawnedIngredients.map((elm, index) => (
-        <div key={index} className="absolute">
-          {elm}
+      {lane?.map((ingr, i) => (
+        <div className="absolute" key={i}>
+          <RandomIngredient
+            ingredientId={ingr}
+            ingredientName={game.getIngredientName(ingr)}
+            directionId={directionId}
+            updateCart={updateCart}
+          />
         </div>
       ))}
     </div>

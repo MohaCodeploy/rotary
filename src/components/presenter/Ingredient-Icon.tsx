@@ -1,12 +1,13 @@
 import { motion } from "framer-motion";
-import { Ingredients, ShoppingCartReport, Ingredient } from "../../api/concept";
+import { Ingredient, Direction } from "../../api/concept";
 import { useState } from "react";
 
 export interface IIngredientIcon {
   directionId: number;
+  ingredientId: Ingredient;
+  ingredientName: string;
   initialValue: { x: number; y: number };
-  ingredient: Ingredient;
-  updateCart: (ingredient: Ingredient, slotId: number) => void;
+  updateCart: (ingredientId: Ingredient, slotId: number) => void;
 }
 
 export const IngredientIcon: React.FC<IIngredientIcon> = (ps) => {
@@ -20,11 +21,11 @@ export const IngredientIcon: React.FC<IIngredientIcon> = (ps) => {
           transition={{ duration: 8 }}
           onAnimationComplete={() => {
             console.log("Animazione completata");
-            ps.updateCart(ps.ingredient, ps.directionId);
+            ps.updateCart(ps.ingredientId, ps.directionId);
+            setIsVisible(false);
           }}
           onClick={() => setIsVisible(false)}
-          src={process.env.PUBLIC_URL + `/icons/Basilico.png`}
-          className="z-50"
+          src={process.env.PUBLIC_URL + `/icons/${ps.ingredientName}.png`}
         />
       )}
     </div>

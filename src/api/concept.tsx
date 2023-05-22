@@ -29,8 +29,8 @@ export interface TimeReport {
 }
 
 export interface LaneReport {
-  directionId: number;
-  ingredient: string;
+  directionId: Direction;
+  ingredients: Ingredient[];
 }
 
 export enum Direction {
@@ -48,7 +48,7 @@ export interface ShoppingCartReport {
 }
 
 export interface SlotReport {
-  expectedIngredient: Ingredient | null;
+  expectedIngredient: Ingredient;
   assignedIngredient: Ingredient | null;
   status: SlotStatus;
 }
@@ -68,13 +68,51 @@ export enum Ingredient {
   Pomodoro,
   Uova,
   Zucchina,
+  Yoghurt,
+  Patatine,
+  Pane,
+  Lattina,
+  Fungo,
+  Broccolo,
+  Cioccolato,
+  Cipolla,
 }
 
 export class ShoppingCartGame {
   private slots: SlotReport[];
+  private allIngredients: Ingredient[];
   private correctIngredients: Ingredient[];
+  private lanes: LaneReport[];
 
   constructor() {
+    this.allIngredients = [
+      Ingredient.Basilico,
+      Ingredient.Carota,
+      Ingredient.Formaggio,
+      Ingredient.Gnocchi,
+      Ingredient.Mozzarella,
+      Ingredient.Pomodoro,
+      Ingredient.Uova,
+      Ingredient.Zucchina,
+      Ingredient.Yoghurt,
+      Ingredient.Patatine,
+      Ingredient.Pane,
+      Ingredient.Lattina,
+      Ingredient.Fungo,
+      Ingredient.Broccolo,
+      Ingredient.Cioccolato,
+      Ingredient.Cipolla,
+    ];
+    this.lanes = [
+      { directionId: Direction.WestTop, ingredients: [] },
+      { directionId: Direction.NordRight, ingredients: [] },
+      { directionId: Direction.NordLeft, ingredients: [] },
+      { directionId: Direction.EastTop, ingredients: [] },
+      { directionId: Direction.WestBottom, ingredients: [] },
+      { directionId: Direction.SouthRight, ingredients: [] },
+      { directionId: Direction.SouthLeft, ingredients: [] },
+      { directionId: Direction.EastBottom, ingredients: [] },
+    ];
     this.correctIngredients = [
       Ingredient.Basilico,
       Ingredient.Carota,
@@ -87,42 +125,42 @@ export class ShoppingCartGame {
     ];
     this.slots = [
       {
-        expectedIngredient: null,
+        expectedIngredient: Ingredient.Basilico,
         assignedIngredient: null,
         status: SlotStatus.Empty,
       },
       {
-        expectedIngredient: null,
+        expectedIngredient: Ingredient.Carota,
         assignedIngredient: null,
         status: SlotStatus.Empty,
       },
       {
-        expectedIngredient: null,
+        expectedIngredient: Ingredient.Formaggio,
         assignedIngredient: null,
         status: SlotStatus.Empty,
       },
       {
-        expectedIngredient: null,
+        expectedIngredient: Ingredient.Gnocchi,
         assignedIngredient: null,
         status: SlotStatus.Empty,
       },
       {
-        expectedIngredient: null,
+        expectedIngredient: Ingredient.Mozzarella,
         assignedIngredient: null,
         status: SlotStatus.Empty,
       },
       {
-        expectedIngredient: null,
+        expectedIngredient: Ingredient.Pomodoro,
         assignedIngredient: null,
         status: SlotStatus.Empty,
       },
       {
-        expectedIngredient: null,
+        expectedIngredient: Ingredient.Uova,
         assignedIngredient: null,
         status: SlotStatus.Empty,
       },
       {
-        expectedIngredient: null,
+        expectedIngredient: Ingredient.Zucchina,
         assignedIngredient: null,
         status: SlotStatus.Empty,
       },
@@ -158,40 +196,38 @@ export class ShoppingCartGame {
     };
   };
 
-  isCompleted(crt: ShoppingCartReport): boolean {
-    return crt.slots.every(
+  getIngredientName = (ingredient: Ingredient): string => {
+    return Ingredient[ingredient];
+  };
+
+  getRandomIngredient = (): Ingredient => {
+    const randomIndex = Math.floor(Math.random() * this.allIngredients.length);
+    const randomIngredient = this.allIngredients[randomIndex];
+    return randomIngredient;
+  };
+
+  isCompleted(): boolean {
+    return this.slots.every(
       (element) => element.assignedIngredient === element.expectedIngredient
     );
   }
-  throwIngredient(ingredient: Ingredient) {}
-  emptyLane(lane: number): void {}
-  emptySlot(slot: number, ingredient: Ingredient): void {}
+  printLane = (dir: Direction) => {
+    return this.lanes[dir].ingredients.slice();
+  };
 
   printGameReport = () => {
     return {
       slots: this.slots,
     };
   };
+  throwIngredient = (dir: Direction, ingr: Ingredient) => {
+    const lane = this.lanes[dir];
+    lane.ingredients.push(ingr);
+  };
 }
 
-export class Ingredients {
-  private ingredients: Ingredient[];
-
-  constructor() {
-    this.ingredients = [
-      Ingredient.Basilico,
-      Ingredient.Carota,
-      Ingredient.Formaggio,
-      Ingredient.Gnocchi,
-      Ingredient.Mozzarella,
-      Ingredient.Pomodoro,
-      Ingredient.Uova,
-      Ingredient.Zucchina,
-    ];
-  }
-
-  getRandomIngredient = (): Ingredient => {
-    const randomIndex = Math.floor(Math.random() * this.ingredients.length);
-    return this.ingredients[randomIndex];
+export class IngredientName {
+  getIngredientName = (ingredient: Ingredient): string => {
+    return Ingredient[ingredient];
   };
 }

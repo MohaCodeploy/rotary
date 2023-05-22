@@ -1,10 +1,11 @@
 import { IngredientIcon } from "../presenter/Ingredient-Icon";
-import { ShoppingCartReport, Ingredient } from "../../api/concept";
+import { Ingredient, Direction } from "../../api/concept";
 
 export interface IRandomIngredient {
   directionId: number;
-  ingredient: Ingredient;
-  updateCart: (ingredient: Ingredient, slotId: number) => void;
+  ingredientId: Ingredient;
+  ingredientName: string;
+  updateCart: (ingredientId: Ingredient, slotId: number) => void | null;
 }
 
 export const RandomIngredient: React.FC<IRandomIngredient> = (ps) => {
@@ -32,10 +33,11 @@ export const RandomIngredient: React.FC<IRandomIngredient> = (ps) => {
   }
   return (
     <IngredientIcon
+      ingredientId={ps.ingredientId}
+      ingredientName={ps.ingredientName}
       directionId={ps.directionId}
       initialValue={initialValue}
       updateCart={ps.updateCart}
-      ingredient={ps.ingredient}
     />
   );
 };
