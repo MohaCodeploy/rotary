@@ -18,7 +18,7 @@ export const IngredientIcon: React.FC<IIngredientIcon> = (ps) => {
         <motion.img
           initial={ps.initialValue}
           animate={{ x: 0, y: 0 }}
-          transition={{ duration: 8 }}
+          transition={{ duration: Math.random() * 3 + 7 }}
           onAnimationComplete={() => {
             console.log("Animazione completata");
             ps.updateCart(ps.ingredientId, ps.directionId);

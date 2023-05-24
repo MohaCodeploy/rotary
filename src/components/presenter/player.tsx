@@ -2,7 +2,7 @@ import { PlayerReport } from "../../api/concept";
 
 export const Player: React.FC<PlayerReport> = (ps) => {
   return (
-    <div className="h-[230px] font-[Rotary] pt-10  text-3xl text-white flex items-center justify-center">
+    <div className="h-[250px] font-[Rotary]  text-3xl text-white flex items-center justify-center">
       {ps.name}
     </div>
   );
